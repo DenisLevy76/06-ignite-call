@@ -1,4 +1,4 @@
-import { globalCss } from '@ignite-ui/react';
+import { globalCss } from '@ignite-ui/react'
 
 export const globalStyles = globalCss({
   '*': {
@@ -14,6 +14,6 @@ export const globalStyles = globalCss({
 
   'body, input, button, textarea': {
     color: '$gray100',
-    '-webkit-font-smoothing': 'antialiased'
-  }
+    '-webkit-font-smoothing': 'antialiased',
+  },
 })
