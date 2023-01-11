@@ -19,6 +19,8 @@ export const HeroContainer = styled('div', {
   background: 'url(/textures/backgroundTexture.png)',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center center',
+
   height: '100%',
   width: '100%',
   display: 'flex',
