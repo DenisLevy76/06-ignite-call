@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { HelperText } from '../home/components/FormUsernameRegister/_styles'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const registerFormSchema = zod.object({
   username: zod
@@ -28,13 +30,21 @@ const Register: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
   } = useForm<RegisterFormType>({
     resolver: zodResolver(registerFormSchema),
   })
 
+  const router = useRouter()
+
   const handleStepOne = (data: RegisterFormType) => {
     console.log(data)
   }
+
+  useEffect(() => {
+    if (router.query.username)
+      setValue('username', String(router.query.username))
+  }, [router.query?.username, setValue])
 
   return (
     <RegisterPageContainer>
