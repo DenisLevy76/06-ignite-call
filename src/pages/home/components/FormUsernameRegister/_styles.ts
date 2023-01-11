@@ -13,7 +13,7 @@ export const Form = styled(Box, {
 })
 
 export const HelperText = styled(Text, {
-  color: 'rgb(255,60,60) !important',
+  color: '#f75a68 !important',
   marginTop: '$2 !important',
   display: 'inline-block',
 })
