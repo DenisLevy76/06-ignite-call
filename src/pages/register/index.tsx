@@ -7,6 +7,8 @@ import * as zod from 'zod'
 import { HelperText } from '../home/components/FormUsernameRegister/_styles'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { api } from '../../lib/axios'
+import { AxiosError } from 'axios'
 
 const registerFormSchema = zod.object({
   username: zod
@@ -20,7 +22,8 @@ const registerFormSchema = zod.object({
   fullName: zod
     .string()
     .min(3, 'O nome deve conter pelo menos 3 letras.')
-    .regex(/^([a-z]+)$/i, 'O nome de nome deve conter apenas letras.'),
+    .regex(/^([a-z ]+)$/i, 'O nome de nome deve conter apenas letras.')
+    .transform((fullName) => fullName.toLocaleLowerCase()),
 })
 
 type RegisterFormType = zod.infer<typeof registerFormSchema>
@@ -37,8 +40,19 @@ const Register: React.FC = () => {
 
   const router = useRouter()
 
-  const handleStepOne = (data: RegisterFormType) => {
-    console.log(data)
+  const handleRegister = async (formData: RegisterFormType) => {
+    try {
+      await api.post('/users', {
+        username: formData.username,
+        fullName: formData.fullName,
+      })
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.data.message) {
+        return alert(error.response.data.message)
+      }
+
+      return console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -57,7 +71,7 @@ const Register: React.FC = () => {
 
         <MultiStep size={4} currentStep={1} />
       </header>
-      <RegisterForm as="form" onSubmit={handleSubmit(handleStepOne)}>
+      <RegisterForm as="form" onSubmit={handleSubmit(handleRegister)}>
         <label>
           <Text>Nome de usuário</Text>
           <TextInput
