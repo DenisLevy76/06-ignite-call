@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import NextAuth, { NextAuthOptions } from 'next-auth'
-import GOOGLEProvider from 'next-auth/providers/google'
+import GOOGLEProvider, { GoogleProfile } from 'next-auth/providers/google'
 import { PrismaAdapter } from '../../../lib/auth/prisma-adapter'
 
 export const BuildAuthOptions = (
@@ -19,10 +19,19 @@ export const BuildAuthOptions = (
               'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar',
           },
         },
+        profile: (profile: GoogleProfile) => {
+          return {
+            id: profile.sub,
+            name: profile.name,
+            username: '',
+            email: profile.email,
+            avatar_url: profile.picture,
+          }
+        },
       }),
     ],
     callbacks: {
-      async signIn({ account }) {
+      signIn: async ({ account }) => {
         if (
           !account?.scope?.includes('https://www.googleapis.com/auth/calendar')
         ) {
@@ -30,6 +39,12 @@ export const BuildAuthOptions = (
         }
 
         return true
+      },
+      session: async ({ session, user }) => {
+        return {
+          ...session,
+          user,
+        }
       },
     },
   }
