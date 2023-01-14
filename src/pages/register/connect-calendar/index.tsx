@@ -29,12 +29,13 @@ const Connect: React.FC = () => {
         <label>
           <Text lang="en">Google Calendar</Text>
           {isSignedIn ? (
-            <Button size="sm" variant="secondary" disabled>
+            <Button size="sm" type="button" variant="secondary" disabled>
               Conectado <Check size={24} />
             </Button>
           ) : (
             <Button
               size="sm"
+              type="button"
               variant="secondary"
               onClick={handleConnectCalendar}
             >
@@ -48,7 +49,7 @@ const Connect: React.FC = () => {
             permissões de acesso ao Google Calendar
           </HelperText>
         )}
-        <Button type="submit" disabled={hasAuthError || !isSignedIn}>
+        <Button type="button" disabled={hasAuthError || !isSignedIn}>
           Próximo passo <ArrowRight size={24} />
         </Button>
       </ConnectWrapper>

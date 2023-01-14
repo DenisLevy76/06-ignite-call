@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const user = await prisma.user.create({
     data: {
-      fullName,
+      name: fullName,
       username,
     },
   })
