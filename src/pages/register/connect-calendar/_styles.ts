@@ -1,4 +1,5 @@
-import { Box, styled } from '@ignite-ui/react'
+import { Box, Text, styled } from '@ignite-ui/react'
+import { HelperText } from '../../home/components/FormUsernameRegister/_styles'
 
 export const ConnectPageContainer = styled('main', {
   maxWidth: 540,

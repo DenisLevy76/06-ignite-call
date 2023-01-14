@@ -14,6 +14,5 @@ export const Form = styled(Box, {
 
 export const HelperText = styled(Text, {
   color: '#f75a68 !important',
-  marginTop: '$2 !important',
   display: 'inline-block',
 })
