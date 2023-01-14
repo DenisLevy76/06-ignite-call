@@ -46,6 +46,8 @@ const Register: React.FC = () => {
         username: formData.username,
         fullName: formData.fullName,
       })
+
+      await router.push('/register/connect-calendar')
     } catch (error) {
       if (error instanceof AxiosError && error.response?.data.message) {
         return alert(error.response.data.message)
