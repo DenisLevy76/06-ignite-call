@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { HelperText } from '../home/components/FormUsernameRegister/_styles'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { api } from '../../lib/axios'
 import { AxiosError } from 'axios'
 
@@ -37,6 +37,7 @@ const Register: React.FC = () => {
   } = useForm<RegisterFormType>({
     resolver: zodResolver(registerFormSchema),
   })
+  const [isUsernameUnique, setIsUsernameUnique] = useState<boolean>(true)
 
   const router = useRouter()
 
@@ -50,7 +51,7 @@ const Register: React.FC = () => {
       await router.push('/register/connect-calendar')
     } catch (error) {
       if (error instanceof AxiosError && error.response?.data.message) {
-        return alert(error.response.data.message)
+        return setIsUsernameUnique(false)
       }
 
       return console.error(error)
@@ -95,6 +96,9 @@ const Register: React.FC = () => {
             <HelperText size="sm">{errors.fullName?.message}</HelperText>
           )}
         </label>
+        {!isUsernameUnique && (
+          <HelperText>Este nome de usuário já está em uso.</HelperText>
+        )}
         <Button type="submit" disabled={isSubmitting}>
           Próximo passo <ArrowRight size={24} />
         </Button>
