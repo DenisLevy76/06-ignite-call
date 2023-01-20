@@ -21,6 +21,7 @@ import { useFieldArray, useForm, Controller } from 'react-hook-form'
 import { getWeekDays } from '../../../utils/getWeekOfDays'
 import { HelperText } from '../../home/components/FormUsernameRegister/_styles'
 import { convertTimeStringToMinutes } from '../../../utils/convertTimeStringToMinutes'
+import { api } from '../../../lib/axios'
 
 const timesIntervalsFormSchema = zod.object({
   intervals: zod
@@ -127,6 +128,9 @@ const TimesIntervals: React.FC = () => {
   const handleSetTimeIntervals = async (timesIntervals: any) => {
     const formData = timesIntervals as TimesIntervalsOutput
     console.log(formData)
+    await api.post('/users/time-intervals', {
+      ...formData,
+    })
   }
 
   return (

@@ -8,11 +8,15 @@ import { HelperText } from '../../home/components/FormUsernameRegister/_styles'
 const Connect: React.FC = () => {
   const session = useSession()
   const { query } = useRouter()
+  const router = useRouter()
 
   const hasAuthError = !!query.error
   const isSignedIn = session.status === 'authenticated'
 
   const handleConnectCalendar = async () => await signIn('google')
+
+  const handleNextStep = async () =>
+    await router.push('/register/time-intervals')
 
   return (
     <ConnectPageContainer>
@@ -49,7 +53,11 @@ const Connect: React.FC = () => {
             permissões de acesso ao Google Calendar
           </HelperText>
         )}
-        <Button type="button" disabled={hasAuthError || !isSignedIn}>
+        <Button
+          type="button"
+          onClick={handleNextStep}
+          disabled={hasAuthError || !isSignedIn}
+        >
           Próximo passo <ArrowRight size={24} />
         </Button>
       </ConnectWrapper>
