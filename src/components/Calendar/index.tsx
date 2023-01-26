@@ -61,7 +61,7 @@ export const Calendar: React.FC = () => {
               <CalendarDay>5</CalendarDay>
             </td>
             <td>
-              <CalendarDay>6</CalendarDay>
+              <CalendarDay disabled>6</CalendarDay>
             </td>
             <td>
               <CalendarDay>7</CalendarDay>
@@ -75,6 +75,50 @@ export const Calendar: React.FC = () => {
             <td>
               <CalendarDay>10</CalendarDay>
             </td>
+          </tr>
+          <tr>
+            <td>
+              <CalendarDay disabled>14</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>15</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>16</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay disabled>17</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>18</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay disabled>19</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>10</CalendarDay>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <CalendarDay disabled>24</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>25</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>26</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>27</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>28</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>29</CalendarDay>
+            </td>
+            <td></td>
           </tr>
         </tbody>
       </CalendarBody>
