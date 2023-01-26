@@ -1,5 +1,6 @@
 import { Avatar, Heading, Text } from '@ignite-ui/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { ScheduleForm } from '../../../components/ScheduleForm'
 import { prisma } from '../../../lib/prisma'
 import { ScheduleContainer, UserHeader } from './_styles'
 
@@ -21,6 +22,7 @@ const Schedule: React.FC<ScheduleProps> = ({
         <Heading>{username}</Heading>
         <Text>{bio}</Text>
       </UserHeader>
+      <ScheduleForm />
     </ScheduleContainer>
   )
 }
