@@ -22,6 +22,7 @@ import { getWeekDays } from '../../../utils/getWeekOfDays'
 import { HelperText } from '../../home/components/FormUsernameRegister/_styles'
 import { convertTimeStringToMinutes } from '../../../utils/convertTimeStringToMinutes'
 import { api } from '../../../lib/axios'
+import { useRouter } from 'next/router'
 
 const timesIntervalsFormSchema = zod.object({
   intervals: zod
@@ -118,6 +119,8 @@ const TimesIntervals: React.FC = () => {
     },
   })
 
+  const router = useRouter()
+
   const intervals = watch('intervals')
 
   const { fields } = useFieldArray({
@@ -127,17 +130,24 @@ const TimesIntervals: React.FC = () => {
 
   const handleSetTimeIntervals = async (timesIntervals: any) => {
     const formData = timesIntervals as TimesIntervalsOutput
-    console.log(formData)
-    await api.post('/users/time-intervals', {
-      ...formData,
-    })
+
+    try {
+      await api.post('/users/time-intervals', {
+        ...formData,
+      })
+
+      router.push('/register/update-profile')
+    } catch (error: any) {
+      alert(error.message)
+      router.push('/register')
+    }
   }
 
   return (
     <TimesIntervalsPageContainer>
       <header>
         <Heading as="strong">Quase lá</Heading>
-        <Text>
+        <Text css={{ color: '$gray200' }}>
           Defina o intervalo de horários que você está disponível em cada dia da
           semana.
         </Text>

@@ -22,7 +22,7 @@ const Connect: React.FC = () => {
     <ConnectPageContainer>
       <header>
         <Heading as="strong">Conecte sua agenda!</Heading>
-        <Text>
+        <Text css={{ color: '$gray200' }}>
           Conecte o seu calendário para verificar automaticamente as horas
           ocupadas e os novos eventos à medida em que são agendados.
         </Text>

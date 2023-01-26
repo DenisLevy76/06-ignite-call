@@ -67,7 +67,7 @@ const Register: React.FC = () => {
     <RegisterPageContainer>
       <header>
         <Heading as="strong">Bem-vindo ao Ignite Call!</Heading>
-        <Text>
+        <Text css={{ color: '$gray200' }}>
           Precisamos de algumas informações para criar seu perfil! Ah, você pode
           editar essas informações depois.
         </Text>
