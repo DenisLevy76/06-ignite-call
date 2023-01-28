@@ -3,6 +3,7 @@
 import dayjs from 'dayjs'
 import { CaretLeft, CaretRight } from 'phosphor-react'
 import { useMemo, useState } from 'react'
+import { getCalendarWeeks } from '../../utils/getCalendarWeeks'
 import { getWeekDays } from '../../utils/getWeekOfDays'
 import {
   CalendarActions,
@@ -15,15 +16,15 @@ import {
 
 const weekDays = getWeekDays(true)
 
-interface CalendarWeek {
-  week: number
-  days: Array<{
-    date: dayjs.Dayjs
-    disabled: boolean
-  }>
+interface CalendarProps {
+  selectedDate?: Date | null
+  onSelectDate: (date: Date) => void
 }
 
-export const Calendar: React.FC = () => {
+export const Calendar: React.FC<CalendarProps> = ({
+  selectedDate,
+  onSelectDate,
+}) => {
   const [today, setToday] = useState(dayjs().set('date', 1))
   const currentMonth = today.format('MMMM')
   const currentYear = today.format('YYYY')
@@ -36,72 +37,16 @@ export const Calendar: React.FC = () => {
     setToday((state) => state.add(1, 'month'))
   }
 
-  const calendarWeeks = useMemo(() => {
-    const daysOfMonth = Array.from({
-      length: today.daysInMonth(),
-    }).map((_, index) => {
-      return today.set('date', index + 1)
-    })
-
-    const firstWeekDay = today.get('day')
-
-    const daysOfPreviousMonthToFill = Array.from({
-      length: firstWeekDay,
-    })
-      .map((_, index) => {
-        return today.subtract(index + 1, 'day')
-      })
-      .reverse()
-
-    const lastDayInCurrentMonth = today.set('date', today.daysInMonth())
-    const lastWeekDay = lastDayInCurrentMonth.get('day')
-
-    const daysOfNextMonthToFill = Array.from({
-      length: 7 - (lastWeekDay + 1),
-    }).map((_, index) => {
-      return lastDayInCurrentMonth.add(index + 1, 'day')
-    })
-
-    const calendarDays = [
-      ...daysOfPreviousMonthToFill.map((date) => ({
-        date,
-        disabled: true,
-      })),
-      ...daysOfMonth.map((date) => ({
-        date,
-        disabled: date.endOf('day').isBefore(new Date()),
-      })),
-      ...daysOfNextMonthToFill.map((date) => ({
-        date,
-        disabled: true,
-      })),
-    ]
-
-    const calendarWeeks = calendarDays.reduce<CalendarWeek[]>(
-      (weeks, _, index, original) => {
-        const isNewWeek = index % 7
-
-        if (!isNewWeek) {
-          weeks.push({
-            week: index / 7 + 1,
-            days: original.slice(index, index + 7),
-          })
-        }
-
-        return weeks
-      },
-      [],
-    )
-
-    return calendarWeeks
-  }, [today])
-
-  console.log(calendarWeeks)
+  const calendarWeeks = useMemo(() => getCalendarWeeks(today), [today])
 
   return (
     <CalendarContainer>
       <CalendarHeader>
-        <CalendarTitle>
+        <CalendarTitle
+          as="time"
+          dateTime={today.toISOString()}
+          title={today.format(`DD [de] MMMM [de] YYYY`)}
+        >
           {currentMonth} <span>{currentYear}</span>
         </CalendarTitle>
         <CalendarActions>
@@ -136,7 +81,11 @@ export const Calendar: React.FC = () => {
                 {week.days.map((day) => {
                   return (
                     <td key={day.date.toISOString()}>
-                      <CalendarDay disabled={day.disabled}>
+                      <CalendarDay
+                        disabled={day.disabled}
+                        title={`${day.date.format('DD [de] MMMM [de] YYYY')}`}
+                        onClick={() => onSelectDate(day.date.toDate())}
+                      >
                         {day.date.get('date')}
                       </CalendarDay>
                     </td>
