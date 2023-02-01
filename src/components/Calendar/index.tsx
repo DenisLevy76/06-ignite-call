@@ -82,8 +82,14 @@ export const Calendar: React.FC<CalendarProps> = ({
                   return (
                     <td key={day.date.toISOString()}>
                       <CalendarDay
+                        type="button"
                         disabled={day.disabled}
-                        title={`${day.date.format('DD [de] MMMM [de] YYYY')}`}
+                        title={`${day.date.format(
+                          'DD [de] MMMM [de] YYYY, dddd',
+                        )}`}
+                        aria-label={`${day.date.format(
+                          'DD [de] MMMM [de] YYYY, dddd',
+                        )}`}
                         onClick={() => onSelectDate(day.date.toDate())}
                       >
                         {day.date.get('date')}

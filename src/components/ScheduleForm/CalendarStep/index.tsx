@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Calendar } from '../../Calendar'
 import {
@@ -16,9 +17,12 @@ export const CalendarStep: React.FC = () => {
       <Calendar onSelectDate={setSelectedDate} selectedDate={selectedDate} />
       {isDaySelected && (
         <TimePicker>
-          <TimePickerTitle as="strong">
-            terça-feira, <span>20 de janeiro</span>
-          </TimePickerTitle>
+          {selectedDate && (
+            <TimePickerTitle as="strong">
+              {dayjs(selectedDate).format('dddd')},{' '}
+              <span>{dayjs(selectedDate).format('DD [de] MMMM')}</span>
+            </TimePickerTitle>
+          )}
           <TimePickerList>
             <li>
               <button type="button">9:00h</button>
