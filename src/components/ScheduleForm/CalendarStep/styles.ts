@@ -66,6 +66,10 @@ export const TimePickerList = styled('ol', {
     padding: '$2 $4',
     fontSize: '$sm',
     cursor: 'pointer',
+
+    '&:disabled': {
+      background: 'transparent',
+    },
   },
 
   '&::-webkit-scrollbar': {
