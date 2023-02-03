@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import { ScheduleForm } from '../../../components/ScheduleForm'
 import { prisma } from '../../../lib/prisma'
-import { ScheduleContainer, UserHeader } from './_styles'
+import { ScheduleContainer, UserHeader } from '../../../styles/schedule-styles'
 
 interface ScheduleProps {
   user: {
