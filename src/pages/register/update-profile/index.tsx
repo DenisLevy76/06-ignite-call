@@ -11,7 +11,7 @@ import {
   ImageSection,
   UpdateProfileBox,
   UpdateProfilePageContainer,
-} from './_styles'
+} from '../../../styles/pages/update-profile-styles'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'

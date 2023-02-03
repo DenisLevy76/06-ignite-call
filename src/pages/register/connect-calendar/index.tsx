@@ -6,7 +6,7 @@ import {
 import { ArrowRight, Check } from 'phosphor-react'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { HelperText } from '../../../components/FormUsernameRegister/_styles'
+import { HelperText } from '../../../components/FormUsernameRegister/styles'
 import { NextSeo } from 'next-seo'
 
 const Connect: React.FC = () => {

@@ -1,5 +1,5 @@
 import { Button, Text, TextInput } from '@ignite-ui/react'
-import { Form, HelperText } from './_styles'
+import { Form, HelperText } from './styles'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'

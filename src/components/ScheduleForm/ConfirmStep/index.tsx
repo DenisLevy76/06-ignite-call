@@ -6,7 +6,7 @@ import { CalendarBlank, Clock } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { api } from '../../../lib/axios'
-import { HelperText } from '../../FormUsernameRegister/_styles'
+import { HelperText } from '../../FormUsernameRegister/styles'
 import { ActionsGroup, ConfirmStepForm, FormHeader } from './styles'
 
 const ConfirmStepSchema = z.object({
