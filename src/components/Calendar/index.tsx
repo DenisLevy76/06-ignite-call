@@ -52,7 +52,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       {
         params: {
           year: today.get('year'),
-          month: today.add(1, 'month').get('month').toString().padStart(2, '0'),
+          month: today.get('month') + 1,
         },
       },
     )
