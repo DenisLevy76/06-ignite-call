@@ -13,13 +13,13 @@ import {
   IntervalsList,
   TimesIntervalsBox,
   TimesIntervalsPageContainer,
-} from './_styles'
+} from '../../../styles/pages/time-intervals-styles'
 import { ArrowRight } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useFieldArray, useForm, Controller } from 'react-hook-form'
 import { getWeekDays } from '../../../utils/getWeekOfDays'
-import { HelperText } from '../../home/components/FormUsernameRegister/_styles'
+import { HelperText } from '../../../components/FormUsernameRegister/_styles'
 import { convertTimeStringToMinutes } from '../../../utils/convertTimeStringToMinutes'
 import { api } from '../../../lib/axios'
 import { useRouter } from 'next/router'

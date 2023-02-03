@@ -1,9 +1,12 @@
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
-import { ConnectWrapper, ConnectPageContainer } from './_styles'
+import {
+  ConnectWrapper,
+  ConnectPageContainer,
+} from '../../../styles/pages/connect-calendar-styles'
 import { ArrowRight, Check } from 'phosphor-react'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { HelperText } from '../../home/components/FormUsernameRegister/_styles'
+import { HelperText } from '../../../components/FormUsernameRegister/_styles'
 import { NextSeo } from 'next-seo'
 
 const Connect: React.FC = () => {

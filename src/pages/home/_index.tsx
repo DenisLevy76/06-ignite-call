@@ -1,8 +1,12 @@
 import Image from 'next/image'
-import { Hero, HeroContainer, HomeContainer } from './_styles'
+import {
+  Hero,
+  HeroContainer,
+  HomeContainer,
+} from '../../styles/pages/home-styles'
 import { Heading, Text } from '@ignite-ui/react'
 import igniteCallPreview from '../../assets/appPrintScreen.png'
-import { FormUsernameRegister } from './components/FormUsernameRegister/_index'
+import { FormUsernameRegister } from '../../components/FormUsernameRegister/_index'
 import { NextSeo } from 'next-seo'
 
 const Home: React.FC = () => {

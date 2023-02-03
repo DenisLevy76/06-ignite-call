@@ -1,10 +1,13 @@
 import { Button, Heading, MultiStep, Text, TextInput } from '@ignite-ui/react'
-import { RegisterForm, RegisterPageContainer } from './_styles'
+import {
+  RegisterForm,
+  RegisterPageContainer,
+} from '../../styles/pages/register-styles'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
-import { HelperText } from '../home/components/FormUsernameRegister/_styles'
+import { HelperText } from '../../components/FormUsernameRegister/_styles'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { api } from '../../lib/axios'
