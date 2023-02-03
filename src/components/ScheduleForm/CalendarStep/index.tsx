@@ -16,7 +16,11 @@ interface IAvailabilityResponse {
   possibleTimes: number[]
 }
 
-export const CalendarStep: React.FC = () => {
+interface CalendarStepProps {
+  onSelectDate: (date: Date) => void
+}
+
+export const CalendarStep: React.FC<CalendarStepProps> = ({ onSelectDate }) => {
   const router = useRouter()
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
@@ -49,6 +53,14 @@ export const CalendarStep: React.FC = () => {
     },
   )
 
+  const handleSelectTime = (hour: number) => {
+    const dateTime = dayjs(selectedDate)
+      .set('hour', hour)
+      .startOf('hour')
+      .toDate()
+    onSelectDate(dateTime)
+  }
+
   return (
     <CalendarStepContainer className="teste" isTimePickerOpen={isDaySelected}>
       <Calendar onSelectDate={setSelectedDate} selectedDate={selectedDate} />
@@ -66,6 +78,7 @@ export const CalendarStep: React.FC = () => {
                 <button
                   type="button"
                   disabled={!availability.availableTimes.includes(hour)}
+                  onClick={() => handleSelectTime(hour)}
                 >
                   {String(hour).padStart(2, '0').padEnd(5, ':00')}h
                 </button>

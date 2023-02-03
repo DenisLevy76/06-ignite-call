@@ -1,8 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Text, TextArea, TextInput } from '@ignite-ui/react'
+import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
 import { CalendarBlank, Clock } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { api } from '../../../lib/axios'
 import { HelperText } from '../../../pages/home/components/FormUsernameRegister/_styles'
 import { ActionsGroup, ConfirmStepForm, FormHeader } from './styles'
 
@@ -21,7 +24,15 @@ const ConfirmStepSchema = z.object({
 
 type ConfirmStepFormData = z.infer<typeof ConfirmStepSchema>
 
-export const ConfirmStep: React.FC = () => {
+interface ConfirmStepProps {
+  scheduleDate: Date
+  onCancel: () => void
+}
+
+export const ConfirmStep: React.FC<ConfirmStepProps> = ({
+  scheduleDate,
+  onCancel,
+}) => {
   const {
     register,
     handleSubmit,
@@ -30,20 +41,40 @@ export const ConfirmStep: React.FC = () => {
     resolver: zodResolver(ConfirmStepSchema),
   })
 
-  const handleConfirmStop = (data: ConfirmStepFormData) => {
-    console.log(data)
+  const router = useRouter()
+
+  const { username } = router.query
+
+  const handleConfirmStop = async (data: ConfirmStepFormData) => {
+    await api.post(`/users/${username}/schedule`, {
+      name: data.username,
+      email: data.email,
+      observations: data.obs,
+      date: scheduleDate,
+    })
+
+    onCancel()
   }
+
+  const date = dayjs(scheduleDate)
 
   return (
     <ConfirmStepForm as="form" onSubmit={handleSubmit(handleConfirmStop)}>
       <FormHeader>
         <Text>
           <CalendarBlank size={24} />
-          <time>22 de Setembro de 2022</time>
+          <time dateTime={date.toISOString()}>
+            {date.format('D [de] MMMM [de] YYYY')}
+          </time>
         </Text>
         <Text>
           <Clock size={24} />
-          <time>18:00h</time>
+          <time
+            dateTime={date.toISOString()}
+            title={date.format('D [de] MMMM [de] YYYY[, às ]HH:mm[ horas.]')}
+          >
+            {date.format('HH:mm[h]')}
+          </time>
         </Text>
       </FormHeader>
       <label>
@@ -77,7 +108,7 @@ export const ConfirmStep: React.FC = () => {
         )}
       </label>
       <ActionsGroup>
-        <Button type="button" variant="tertiary">
+        <Button type="button" variant="tertiary" onClick={onCancel}>
           Cancelar
         </Button>
         <Button type="submit" disabled={isSubmitting}>

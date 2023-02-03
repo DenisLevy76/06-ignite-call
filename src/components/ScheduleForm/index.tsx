@@ -1,7 +1,17 @@
+import { useState } from 'react'
 import { CalendarStep } from './CalendarStep'
-// eslint-disable-next-line no-unused-vars
 import { ConfirmStep } from './ConfirmStep'
 
 export const ScheduleForm: React.FC = () => {
-  return <CalendarStep />
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+
+  if (selectedDate)
+    return (
+      <ConfirmStep
+        scheduleDate={selectedDate}
+        onCancel={() => setSelectedDate(null)}
+      />
+    )
+
+  return <CalendarStep onSelectDate={setSelectedDate} />
 }
