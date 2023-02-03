@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { api } from '../../lib/axios'
 import { AxiosError } from 'axios'
+import { NextSeo } from 'next-seo'
 
 const registerFormSchema = zod.object({
   username: zod
@@ -64,46 +65,49 @@ const Register: React.FC = () => {
   }, [router.query?.username, setValue])
 
   return (
-    <RegisterPageContainer>
-      <header>
-        <Heading as="strong">Bem-vindo ao Ignite Call!</Heading>
-        <Text css={{ color: '$gray200' }}>
-          Precisamos de algumas informações para criar seu perfil! Ah, você pode
-          editar essas informações depois.
-        </Text>
+    <>
+      <NextSeo title="Registro 1/4 | Ignite Call" />
+      <RegisterPageContainer>
+        <header>
+          <Heading as="strong">Bem-vindo ao Ignite Call!</Heading>
+          <Text css={{ color: '$gray200' }}>
+            Precisamos de algumas informações para criar seu perfil! Ah, você
+            pode editar essas informações depois.
+          </Text>
 
-        <MultiStep size={4} currentStep={1} />
-      </header>
-      <RegisterForm as="form" onSubmit={handleSubmit(handleRegister)}>
-        <label>
-          <Text>Nome de usuário</Text>
-          <TextInput
-            prefix="ignite.com/"
-            placeholder="usuário"
-            {...register('username')}
-          />
-          {errors.username && (
-            <HelperText size="sm">{errors.username?.message}</HelperText>
+          <MultiStep size={4} currentStep={1} />
+        </header>
+        <RegisterForm as="form" onSubmit={handleSubmit(handleRegister)}>
+          <label>
+            <Text>Nome de usuário</Text>
+            <TextInput
+              prefix="ignite.com/"
+              placeholder="usuário"
+              {...register('username')}
+            />
+            {errors.username && (
+              <HelperText size="sm">{errors.username?.message}</HelperText>
+            )}
+          </label>
+          <label>
+            <Text>Nome completo</Text>
+            <TextInput
+              placeholder="João Carlos da Silva"
+              {...register('fullName')}
+            />
+            {errors.fullName && (
+              <HelperText size="sm">{errors.fullName?.message}</HelperText>
+            )}
+          </label>
+          {!isUsernameUnique && (
+            <HelperText>Este nome de usuário já está em uso.</HelperText>
           )}
-        </label>
-        <label>
-          <Text>Nome completo</Text>
-          <TextInput
-            placeholder="João Carlos da Silva"
-            {...register('fullName')}
-          />
-          {errors.fullName && (
-            <HelperText size="sm">{errors.fullName?.message}</HelperText>
-          )}
-        </label>
-        {!isUsernameUnique && (
-          <HelperText>Este nome de usuário já está em uso.</HelperText>
-        )}
-        <Button type="submit" disabled={isSubmitting}>
-          Próximo passo <ArrowRight size={24} />
-        </Button>
-      </RegisterForm>
-    </RegisterPageContainer>
+          <Button type="submit" disabled={isSubmitting}>
+            Próximo passo <ArrowRight size={24} />
+          </Button>
+        </RegisterForm>
+      </RegisterPageContainer>
+    </>
   )
 }
 
