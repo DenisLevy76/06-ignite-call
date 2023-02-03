@@ -1,8 +1,9 @@
-// import { Container } from './styles'
-
+import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
 import { CaretLeft, CaretRight } from 'phosphor-react'
 import { useMemo, useState } from 'react'
+import { api } from '../../lib/axios'
 import { getCalendarWeeks } from '../../utils/getCalendarWeeks'
 import { getWeekDays } from '../../utils/getWeekOfDays'
 import {
@@ -16,6 +17,11 @@ import {
 
 const weekDays = getWeekDays(true)
 
+interface IBlockedDatesResponse {
+  blockedWeekDays: number[]
+  blockedDays: number[]
+}
+
 interface CalendarProps {
   selectedDate?: Date | null
   onSelectDate: (date: Date) => void
@@ -26,8 +32,11 @@ export const Calendar: React.FC<CalendarProps> = ({
   onSelectDate,
 }) => {
   const [today, setToday] = useState(dayjs().set('date', 1))
+  const router = useRouter()
   const currentMonth = today.format('MMMM')
   const currentYear = today.format('YYYY')
+
+  const username = String(router.query.username)
 
   const handlePreviousMonth = () => {
     setToday((state) => state.subtract(1, 'month'))
@@ -37,8 +46,34 @@ export const Calendar: React.FC<CalendarProps> = ({
     setToday((state) => state.add(1, 'month'))
   }
 
-  const calendarWeeks = useMemo(() => getCalendarWeeks(today), [today])
+  const getBlockedDates = async () => {
+    const { data } = await api.get<IBlockedDatesResponse>(
+      `/users/${username}/blocked-dates`,
+      {
+        params: {
+          year: today.get('year'),
+          month: today.get('month') + 1,
+        },
+      },
+    )
 
+    return data
+  }
+
+  const { data: blockedDays } = useQuery<IBlockedDatesResponse>(
+    ['blocked-dates', today.get('year'), today.get('month')],
+    getBlockedDates,
+  )
+
+  const calendarWeeks = useMemo(
+    () =>
+      getCalendarWeeks(
+        today,
+        blockedDays?.blockedWeekDays,
+        blockedDays?.blockedDays,
+      ),
+    [today, blockedDays],
+  )
   return (
     <CalendarContainer>
       <CalendarHeader>

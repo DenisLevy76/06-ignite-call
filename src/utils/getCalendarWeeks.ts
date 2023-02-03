@@ -8,7 +8,13 @@ interface CalendarWeek {
   }>
 }
 
-export const getCalendarWeeks = (today: dayjs.Dayjs) => {
+export const getCalendarWeeks = (
+  today: dayjs.Dayjs,
+  blockedWeekDays: number[] = [],
+  blockedDays: number[] = [],
+) => {
+  if (blockedWeekDays.length <= 0) return []
+
   const daysOfMonth = Array.from({
     length: today.daysInMonth(),
   }).map((_, index) => {
@@ -41,7 +47,10 @@ export const getCalendarWeeks = (today: dayjs.Dayjs) => {
     })),
     ...daysOfMonth.map((date) => ({
       date,
-      disabled: date.endOf('day').isBefore(new Date()),
+      disabled:
+        date.endOf('day').isBefore(new Date()) ||
+        blockedWeekDays.includes(date.get('day')) ||
+        blockedDays.includes(date.get('date')),
     })),
     ...daysOfNextMonthToFill.map((date) => ({
       date,
